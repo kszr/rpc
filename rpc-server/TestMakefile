@@ -1,0 +1,14 @@
+CC     = gcc
+CFLAGS = -Wall
+CURL_LIBS = $(shell curl-config --libs)
+CURL_CFLAGS = $(shell curl-config --cflags)
+
+######################################################################
+
+ud_proxy_test: ud_proxy_test.c proxy.c
+	$(CC) -o $@ $(CFLAGS) $(CURL_CFLAGS) ud_proxy_test.c $(CURL_LIBS)
+
+######################################################################
+
+clean:
+	rm -f ud_proxy_test *.o

@@ -1,0 +1,19 @@
+CC     = gcc
+CFLAGS = -Wall
+######################################################################
+
+RPC_FILES = proxy_rpc_svc.c  roxy_rpc.h proxy_rpc_clnt.c
+
+rpcfiles: proxy_rpc.x
+	rpcgen -C -K 0 $< 
+
+client: client.c proxy_rpc_clnt.c proxy_rpc.h
+	$(CC) -o $@ $(CFLAGS) client.c proxy_rpc_clnt.c $(LIBS)
+
+ud_client_test: ud_client_test.c proxy_rpc_svc.c proxy_rpc.h
+	$(CC) -o $@ $(CFLAGS) ud_client_test.c proxy_rpc_svc.c $(LIBS)
+
+######################################################################
+
+clean:
+	rm -f ud_client_test client $(RPC_FILES) *.o
