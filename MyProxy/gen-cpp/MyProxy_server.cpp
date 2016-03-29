@@ -53,7 +53,11 @@ class MyProxyHandler : virtual public MyProxyIf {
     // Your implementation goes here
     
     printf("httpget_1\n");
-    _return = httpget_1_svc(url, NULL);
+    std::string temp = httpget_1_svc(url, NULL);
+    std::size_t body_start = temp.find("<body");
+    std::size_t body_start_end = temp.find(">", body_start);
+    std::size_t body_end = temp.find("</body>");
+    _return = temp.substr(body_start_end+1, body_end - body_start_end-1);
 //    _return = &chunk.memory;
   }
 
