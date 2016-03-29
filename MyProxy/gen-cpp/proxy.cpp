@@ -3,6 +3,7 @@
 #include <curl/curl.h>
 #include <rpc/rpc.h>
 #include <sys/dir.h>
+#include "../Policies/lru.cpp"
 
 using namespace std;
 
@@ -78,8 +79,13 @@ void get_by_curl(const string url, struct MemoryStruct* chunk){
 
 string httpget_1_svc(const string url, struct svc_req* req){
   static struct MemoryStruct chunk = {NULL, 0};
-
-  get_by_curl(url, &chunk);
+  
+  size_t sz;
+  
+  if ((chunk.memory=gtcache_get(url, &sz)) == NULL) {
+  	get_by_curl(url, &chunk);
+  	gtcache_set(url, chunk.memory, sz);
+  	}
 
   return (string)chunk.memory;
 }

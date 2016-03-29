@@ -9,6 +9,11 @@
 #include <thrift/transport/TBufferTransports.h>
 
 #include "proxy.cpp"
+#include "../Policies/lru.cpp"
+
+#define capacity 1024*1024
+#define minsize 1
+
 using namespace ::apache::thrift;
 using namespace ::apache::thrift::protocol;
 using namespace ::apache::thrift::transport;
@@ -58,9 +63,12 @@ int main(int argc, char **argv) {
   shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
   shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
   shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
-
   TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
+  
+  gtcache_init (capacity, minsize, 1)
   server.serve();
+  gtcache_destroy ();
+  
   return 0;
 }
 
