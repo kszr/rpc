@@ -9,6 +9,10 @@
 #include <thrift/transport/TBufferTransports.h>
 
 #include "proxy.cpp"
+#include "../Policies/hshtbl.cpp"
+#include "../Policies/steque.cpp"
+#include "../Policies/indexminpq.cpp"
+// #include "../Policies/indexrndq.cpp"
 
 #define capacity 1024*1024
 #define minsize 1

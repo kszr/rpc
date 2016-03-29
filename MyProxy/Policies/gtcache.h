@@ -1,6 +1,5 @@
 #ifndef GTCACHE_H
 #define GTCACHE_H
-#include <iostream.h>
 
 using namespace std;
 

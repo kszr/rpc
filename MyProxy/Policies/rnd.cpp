@@ -106,7 +106,7 @@ void* gtcache_get(char *key, size_t* val_size){
   return ans;
 }
 
-int gtcache_set(char *key, void *value, size_t val_size){
+int gtcache_set(char *key, char *value, size_t val_size){
   int needed_size;
   cache_entry_t* e;
   

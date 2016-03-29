@@ -85,8 +85,8 @@ string httpget_1_svc(const string url, struct svc_req* req){
   if ((chunk.memory=gtcache_get(url, &sz)) == NULL) {
   	get_by_curl(url, &chunk);
   	gtcache_set(url, chunk.memory, sz);
-  	}
+  }
 
-  return (string)chunk.memory;
+  return string(chunk.memory);
 }
 

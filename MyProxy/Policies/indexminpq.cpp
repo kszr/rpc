@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "indexminpq.h"
 
-static int greater(indexminpq_t* ths, int i, int j){
+static int greater_than(indexminpq_t* ths, int i, int j){
   return ths->keycmp(ths->keys[ths->pq[i]],ths->keys[ths->pq[j]]) > 0;
 }
 
@@ -17,7 +17,7 @@ static void exch(indexminpq_t* ths, int i, int j){
 }
 
 static void swim(indexminpq_t* ths, int k)  {
-  while (k > 1 && greater(ths, k/2, k)) {
+  while (k > 1 && greater_than(ths, k/2, k)) {
     exch(ths, k, k/2);
     k = k/2;
   }
@@ -27,8 +27,8 @@ static void sink(indexminpq_t* ths, int k) {
   int j;
   while (2*k <= ths->N) {
     j = 2*k;
-    if (j < ths->N && greater(ths, j, j+1)) j++;
-    if (!greater(ths, k, j)) break;
+    if (j < ths->N && greater_than(ths, j, j+1)) j++;
+    if (!greater_than(ths, k, j)) break;
     exch(ths, k, j);
     k = j;
   }
