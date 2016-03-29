@@ -1,7 +1,7 @@
 #ifndef STEQUE_H
 #define STEQUE_H
 
-typedef char* steque_item;
+typedef void* steque_item;
 
 typedef struct steque_node_t{
   steque_item item;

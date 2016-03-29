@@ -6,6 +6,7 @@
 #include "hshtbl.h"
 #include "indexminpq.h"
 #include "steque.h"
+#include <iostream.h>
 
 using namespace std;
 
@@ -56,7 +57,7 @@ static void deleteentry(cache_entry_t* e){
   free(e->key);
   free(e->value);
 
-  steque_push(&available_ids, (char*)e->id);
+  steque_push(&available_ids, (void *) e->id);
 }
 
 static cache_entry_t* createentry(char* key, char* value, size_t val_size){
@@ -72,7 +73,7 @@ static cache_entry_t* createentry(char* key, char* value, size_t val_size){
     return NULL;
   }
 
-  e = &cache[(char)steque_pop(&available_ids)];
+  e = &cache[(long) steque_pop(&available_ids)];
   e->key = (char*) malloc(key_len);
   e->value = (char*) malloc(val_size);
   e->val_size = val_size;
@@ -104,7 +105,7 @@ int gtcache_init(size_t capacity, size_t min_entry_size, int num_levels){
     
   for( j = 0; j < nmax; j++){
     cache[j].id = j;
-    steque_push(&available_ids, (char*)j);
+    steque_push(&available_ids, (void *)j);
   }
   
   return 0;
@@ -113,12 +114,12 @@ int gtcache_init(size_t capacity, size_t min_entry_size, int num_levels){
 char* gtcache_get(const string key, size_t *val_size){
   cache_entry_t* e;
   char* ans;
-  char *ch = key.c_str();
+  char *ch = (char *) key.c_str();
 
-  e = hshtbl_get(&tbl, ch);
+  e = (cache_entry_t *) hshtbl_get(&tbl, ch);
 
   if(e == NULL)
-    return e;
+    return NULL;
   
   /* Mark e as used, if necessary */
   gettimeofday(&e->tv, NULL);
@@ -127,7 +128,7 @@ char* gtcache_get(const string key, size_t *val_size){
   if( val_size != NULL)
     *val_size = e->val_size;
 
-  ans = malloc(e->val_size);
+  ans = (char *) malloc(e->val_size);
   memcpy(ans, e->value, e->val_size);
   
   return ans;
@@ -135,7 +136,7 @@ char* gtcache_get(const string key, size_t *val_size){
 
 int gtcache_set(const string key, void *value, size_t val_size){
   cache_entry_t* e;
-  char *ch = key.c_str();
+  char *ch = (char *) key.c_str();
 
   if (val_size > cache_capacity){
     /* It's hopeless. */
@@ -143,7 +144,7 @@ int gtcache_set(const string key, void *value, size_t val_size){
     return 1;
   }
   
-  e = hshtbl_get(&tbl, ch);
+  e = (cache_entry_t *) hshtbl_get(&tbl, ch);
   
   /* If it is already in the cache...*/
   if( e != NULL){
@@ -165,7 +166,7 @@ int gtcache_set(const string key, void *value, size_t val_size){
     deleteentry(&cache[indexminpq_delmin(&eviction_queue)]);
 
   /* Create a new entry for the new element*/
-  if( createentry(ch, value, val_size) == NULL){
+  if( createentry(ch, (char *) value, val_size) == NULL){
     fprintf(stderr, "gtcache_set: unable to create cache_entry\n");
     return -1;
   }

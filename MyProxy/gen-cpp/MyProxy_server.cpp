@@ -9,7 +9,6 @@
 #include <thrift/transport/TBufferTransports.h>
 
 #include "proxy.cpp"
-#include "../Policies/lru.cpp"
 
 #define capacity 1024*1024
 #define minsize 1
@@ -65,7 +64,7 @@ int main(int argc, char **argv) {
   shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
   TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
   
-  gtcache_init (capacity, minsize, 1)
+  gtcache_init (capacity, minsize, 1);
   server.serve();
   gtcache_destroy ();
   
