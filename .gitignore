@@ -1,3 +1,5 @@
 *~
 *.o
 *.out
+MyProxy_server
+MyProxy_client
