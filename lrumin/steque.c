@@ -1,1 +1,0 @@
-../lfu/steque.c

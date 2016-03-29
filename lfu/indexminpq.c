@@ -1,1 +1,0 @@
-../../shared/generics/indexminpq.c
