@@ -3,9 +3,9 @@
 #include <string.h>
 #include <sys/time.h>
 #include "gtcache.h"
-#include "hshtbl.h"
-#include "indexminpq.h"
-#include "steque.h"
+#include "data-structures/hshtbl.h"
+#include "data-structures/indexminpq.h"
+#include "data-structures/steque.h"
 
 using namespace std;
 
