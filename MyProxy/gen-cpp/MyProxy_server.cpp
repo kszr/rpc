@@ -13,8 +13,8 @@
 #include "proxy.cpp"
 #include "../Policies/data-structures/hshtbl.cpp"
 #include "../Policies/data-structures/steque.cpp"
-#include "../Policies/data-structures/indexminpq.cpp"
-//#include "../Policies/data-structures/indexrndq.cpp"
+//#include "../Policies/data-structures/indexminpq.cpp"
+#include "../Policies/data-structures/indexrndq.cpp"
 
 #define capacity 1024*1024
 #define minsize 1
@@ -58,7 +58,7 @@ class MyProxyHandler : virtual public MyProxyIf {
 //    cout<<"Size filled: "<<currsize<<endl;
 //    printf("httpget_1\n");
     _return = httpget_1_svc(url, NULL);
-//    cout<<"Size of web content: "<<_return.size()<<endl;
+//    cout<"Size of web content: "<<_return.size()<<endl;
 //    currsize= gtcache_memused();
 //    cout<<"Size filled: "<<currsize<<endl;
   }
