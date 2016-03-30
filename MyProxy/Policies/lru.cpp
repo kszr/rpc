@@ -123,7 +123,7 @@ char* gtcache_get(const string key, size_t* val_size){
   
   /* Mark e as used, if necessary */
   gettimeofday(&e->tv, NULL);
-  indexminpq_increasekey(&eviction_queue, e->id, &e->tv);
+  indexminpq_increasekey(&eviction_queue, e->id, (indexminpq_key) &e->tv);
   
   if(val_size != NULL)
     *val_size = e->val_size;
@@ -155,7 +155,7 @@ int gtcache_set(const string key, char *value, size_t val_size){
       memcpy(e->value, value, val_size);
       /* Mark e as used, if necessary */
       gettimeofday(&e->tv, NULL);
-      indexminpq_increasekey(&eviction_queue, e->id, &e->tv);
+      indexminpq_increasekey(&eviction_queue, e->id, (indexminpq_key) &e->tv);
       return 0;
     }
     else{

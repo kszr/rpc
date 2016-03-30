@@ -151,11 +151,11 @@ int gtcache_set(const std::string key, char* value, size_t val_size) {
       memcpy(e->value, value, val_size);
       /* Mark e as used, if necessary */
       e->weight = 1.0/val_size;
-      indexminpq_increasekey(&eviction_queue, e->id, e);
+      indexminpq_increasekey(&eviction_queue, e->id, (indexminpq_key) e);
       return 0;
     }
     else{
-      indexminpq_delete(&eviction_queue, e->id);
+      indexminpq_delete(&eviction_queue, (int) e->id);
       deleteentry(e);
     }
   }
@@ -183,7 +183,7 @@ char* gtcache_get(const std::string key, size_t* val_size) {
     return NULL;
   
   e->weight = 1/e->val_size; // Revert weight to old default.
-  indexminpq_increasekey(&eviction_queue, e->id, e);
+  indexminpq_increasekey(&eviction_queue, e->id, (indexminpq_key) e);
   
   if( val_size != NULL)
     *val_size = e->val_size;
@@ -200,7 +200,7 @@ int gtcache_memused() {
 
 void gtcache_destroy() {
     while( !indexminpq_isempty( &eviction_queue ) )
-    deleteentry(&cache[indexminpq_delmin(&eviction_queue)] );
+        deleteentry(&cache[indexminpq_delmin(&eviction_queue)] );
   
     steque_destroy(&available_ids);
     indexminpq_destroy(&eviction_queue);

@@ -13,21 +13,21 @@
 #include "proxy.cpp"
 #include "../Policies/data-structures/hshtbl.cpp"
 #include "../Policies/data-structures/steque.cpp"
-//#include "../Policies/data-structures/indexminpq.cpp"
+#include "../Policies/data-structures/indexminpq.cpp"
 #include "../Policies/data-structures/indexrndq.cpp"
 
-#define capacity 1024*1024
-#define minsize 1
+static const std::size_t capacity = 1024*1024;
+static const std::size_t minsize = 1;
 
 using namespace ::apache::thrift;
 using namespace ::apache::thrift::protocol;
 using namespace ::apache::thrift::transport;
 using namespace ::apache::thrift::server;
 
-using boost::shared_ptr;
+// using boost::shared_ptr;
 
 using namespace  ::MyProxy;
-using namespace std;
+
 /*
 extern "C" {
 string httpget_1_svc(const string url, struct svc_req* req);
@@ -53,25 +53,25 @@ class MyProxyHandler : virtual public MyProxyIf {
 
   void httpget_1(std::string& _return, const std::string& url) {
     // Your implementation goes here
-//    int currsize;
-//    currsize= gtcache_memused();
+   int currsize;
+   currsize= gtcache_memused();
 //    cout<<"Size filled: "<<currsize<<endl;
 //    printf("httpget_1\n");
     _return = httpget_1_svc(url, NULL);
-//    cout<"Size of web content: "<<_return.size()<<endl;
+//    std::cout<<"Size of web content: "<<_return.size()<<endl;
 //    currsize= gtcache_memused();
-//    cout<<"Size filled: "<<currsize<<endl;
+//    std::cout<<"Size filled: "<<currsize<<endl;
   }
 
 };
 
 int main(int argc, char **argv) {
   int port = 9090;
-  shared_ptr<MyProxyHandler> handler(new MyProxyHandler());
-  shared_ptr<TProcessor> processor(new MyProxyProcessor(handler));
-  shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
-  shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
-  shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
+  ::boost::shared_ptr<MyProxyHandler> handler(new MyProxyHandler());
+  ::boost::shared_ptr<TProcessor> processor(new MyProxyProcessor(handler));
+  ::boost::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
+  ::boost::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
+  ::boost::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
   TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
   
   gtcache_init (capacity, minsize, 1);

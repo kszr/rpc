@@ -5,9 +5,9 @@
 #include <rpc/rpc.h>
 #include <sys/dir.h>
 
-#include "../Policies/lru.cpp"
-//#include "../Policies/rnd.cpp"
-// #include "../Policies/gds.cpp"
+// #include "../Policies/lru.cpp"
+// #include "../Policies/rnd.cpp"
+#include "../Policies/gds.cpp"
 //#include "../Policies/mypolicy.cpp"
 
 using namespace std;
