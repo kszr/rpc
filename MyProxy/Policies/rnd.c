@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 #include "gtcache.h"
-#include "hshtbl.h"
-#include "indexrndq.h"
-#include "steque.h"
+#include "data-structures/hshtbl.h"
+#include "data-structures/indexrndq.h"
+#include "data-structures/steque.h"
 
 typedef struct{
   char* key;
