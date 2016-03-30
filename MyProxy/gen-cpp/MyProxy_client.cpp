@@ -26,7 +26,7 @@ client.ping();
 string webcontent;
 string url= "www.google.com";
 client.httpget_1(webcontent, url);
-cout<<"The web page content for URL: "<<url<<" is:" <<webcontent<<endl;
+//cout<<"The web page content for URL: "<<url<<" is:" <<webcontent<<endl;
 transport->close();
 
 return 0;

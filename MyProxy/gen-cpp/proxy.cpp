@@ -1,9 +1,12 @@
 #include <stdlib.h>
+#include <iostream>
 #include <string.h>
 #include <curl/curl.h>
 #include <rpc/rpc.h>
 #include <sys/dir.h>
 #include "../Policies/lru.cpp"
+//#include "../Policies/rnd.cpp"
+//#include "../Policies/mypolicy.cpp"
 
 using namespace std;
 
@@ -29,6 +32,8 @@ WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
   memcpy(&(mem->memory[mem->size]), contents, realsize);
   mem->size += realsize;
   mem->memory[mem->size] = 0;
+  
+//  cout<<"Size of webpage"<<mem->size<<endl;
  
   return realsize;
 }
@@ -80,13 +85,20 @@ void get_by_curl(const string url, struct MemoryStruct* chunk){
 string httpget_1_svc(const string url, struct svc_req* req){
   static struct MemoryStruct chunk = {NULL, 0};
   
-  size_t sz;
-  
-  if ((chunk.memory=gtcache_get(url, &sz)) == NULL) {
+  if ((chunk.memory=gtcache_get(url, &chunk.size)) == NULL) {
   	get_by_curl(url, &chunk);
-  	gtcache_set(url, chunk.memory, sz);
+  	
+  	gtcache_set(url, chunk.memory, chunk.size);
   }
+  
+  
+    std::string temp = (string)chunk.memory;
+    cout<<"Size of web content: "<<temp.size()<<endl;
+    std::size_t body_start = temp.find("<body");
+    std::size_t body_start_end = temp.find(">", body_start);
+    std::size_t body_end = temp.find("</body>");
+    temp = temp.substr(body_start_end+1, body_end - body_start_end-1);
 
-  return string(chunk.memory);
+  return temp;
 }
 

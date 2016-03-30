@@ -49,7 +49,7 @@ static cache_entry_t* createentry(char* key, void* value, size_t val_size){
 
   used_mem += val_size;
 
-  e = &cache[steque_pop(&available_ids)];
+  e = &cache[(long)steque_pop(&available_ids)];
   e->key = (char*) malloc(key_len);
   e->value = (void*) malloc(val_size);
   e->val_size = val_size;
@@ -106,7 +106,7 @@ void* gtcache_get(char *key, size_t* val_size){
   return ans;
 }
 
-int gtcache_set(char *key, char *value, size_t val_size){
+int gtcache_set(char *key, void *value, size_t val_size){
   int needed_size;
   cache_entry_t* e;
   
