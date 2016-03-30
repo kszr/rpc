@@ -33,7 +33,7 @@ typedef struct{
   char* key;
   void* value;
   size_t val_size;
-  long id;
+  int id;
   double weight;
 } cache_entry_t;
 
@@ -109,7 +109,7 @@ static cache_entry_t* createentry(char* key, void* value, size_t val_size){
 }
 
 int gtcache_init(size_t capacity, size_t min_entry_size, int num_levels) {
-  long j, nmax;
+  int j, nmax;
   least_weight = 0.0;
 
   min_size = min_entry_size;
@@ -135,6 +135,7 @@ int gtcache_init(size_t capacity, size_t min_entry_size, int num_levels) {
 
 int gtcache_set(const std::string key, char* value, size_t val_size) {
   cache_entry_t* e;
+  char *ch = (char *) key.c_str();
   
   if (val_size > cache_capacity){
     /* It's hopeless. */
@@ -142,7 +143,7 @@ int gtcache_set(const std::string key, char* value, size_t val_size) {
     return 1;
   }
 
-  e = hshtbl_get(&tbl, key);
+  e = (cache_entry_t *) hshtbl_get(&tbl, ch);
   
   /* If it is already in the cache...*/
   if( e != NULL){
@@ -163,7 +164,7 @@ int gtcache_set(const std::string key, char* value, size_t val_size) {
   while(used_mem + val_size > cache_capacity)
     deleteentry(&cache[indexminpq_delmin(&eviction_queue)]);
 
-  if( createentry(key, value, val_size) == NULL){
+  if( createentry(ch, value, val_size) == NULL){
     fprintf(stderr, "gtcache_set: unable to create cache_entry\n");
     return -1;
   }
@@ -174,8 +175,9 @@ int gtcache_set(const std::string key, char* value, size_t val_size) {
 char* gtcache_get(const std::string key, size_t* val_size) {
   cache_entry_t* e;
   char *ans;
+  char *ch = (char *) key.c_str();
 
-  e = hshtbl_get(&tbl, key);
+  e = (cache_entry_t *) hshtbl_get(&tbl, ch);
 
   if(e == NULL)
     return NULL;
