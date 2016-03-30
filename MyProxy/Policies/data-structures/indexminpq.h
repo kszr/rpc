@@ -2,7 +2,7 @@
 #define INDEXMINPQ_H
 
 /* 
-* Implementation of an indexed min priority queueu.  Adapted from
+* Implementation of an indexed min priority queue.  Adapted from
 * Robert Sedgewich and Kevin Wayne's "Algorithms" text.
 * http://algs4.cs.princeton.edu/24pq/IndexMaxPQ.java.html
 */
