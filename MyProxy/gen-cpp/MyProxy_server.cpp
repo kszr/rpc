@@ -11,10 +11,10 @@
 #include <thrift/transport/TBufferTransports.h>
 
 #include "proxy.cpp"
-#include "../Policies/hshtbl.cpp"
-#include "../Policies/steque.cpp"
-#include "../Policies/indexminpq.cpp"
-//#include "../Policies/indexrndq.cpp"
+#include "../Policies/data-structures/hshtbl.cpp"
+#include "../Policies/data-structures/steque.cpp"
+#include "../Policies/data-structures/indexminpq.cpp"
+//#include "../Policies/data-structures/indexrndq.cpp"
 
 #define capacity 1024*1024
 #define minsize 1
@@ -53,18 +53,14 @@ class MyProxyHandler : virtual public MyProxyIf {
 
   void httpget_1(std::string& _return, const std::string& url) {
     // Your implementation goes here
-    int currsize;
-//    cout<<"Size of cache: "<<capacity<<endl;
-    currsize= gtcache_memused();
+//    int currsize;
+//    currsize= gtcache_memused();
 //    cout<<"Size filled: "<<currsize<<endl;
 //    printf("httpget_1\n");
     _return = httpget_1_svc(url, NULL);
-//    cout<<"Size of web content: "<<temp.size()<<endl;
-//    _return = temp.substr(body_start_end+1, body_end - body_start_end-1);
-    cout<<"Size of web content: "<<_return.size()<<endl;
-    currsize= gtcache_memused();
-    cout<<"Size filled: "<<currsize<<endl;
-//    _return = &chunk.memory;
+//    cout<<"Size of web content: "<<_return.size()<<endl;
+//    currsize= gtcache_memused();
+//    cout<<"Size filled: "<<currsize<<endl;
   }
 
 };

@@ -139,7 +139,7 @@ int gtcache_set(const string key, char *value, size_t val_size){
   char *ch = (char *) key.c_str();
   
 //  cout<<"Cache capacity: "<<cache_capacity<<endl;
-  cout<<"Page size: "<<val_size<<endl;
+//  cout<<"Page size: "<<val_size<<endl;
 
   if (val_size > cache_capacity){
     /* It's hopeless. */

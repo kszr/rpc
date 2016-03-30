@@ -85,20 +85,21 @@ void get_by_curl(const string url, struct MemoryStruct* chunk){
 string httpget_1_svc(const string url, struct svc_req* req){
   static struct MemoryStruct chunk = {NULL, 0};
   
+  std::string temp;
+  
   if ((chunk.memory=gtcache_get(url, &chunk.size)) == NULL) {
   	get_by_curl(url, &chunk);
   	
-  	gtcache_set(url, chunk.memory, chunk.size);
+  	temp = (string)chunk.memory;
+//  	cout<<"Size of web content: "<<temp.size()<<endl;
+  	std::size_t body_start = temp.find("<body");
+        std::size_t body_start_end = temp.find(">", body_start);
+        std::size_t body_end = temp.find("</body>");
+  	temp = temp.substr(body_start_end+1, body_end - body_start_end-1);
+  	
+  	gtcache_set(url, (char *)temp.c_str(), temp.size());
   }
   
-  
-    std::string temp = (string)chunk.memory;
-    cout<<"Size of web content: "<<temp.size()<<endl;
-    std::size_t body_start = temp.find("<body");
-    std::size_t body_start_end = temp.find(">", body_start);
-    std::size_t body_end = temp.find("</body>");
-    temp = temp.substr(body_start_end+1, body_end - body_start_end-1);
-
   return temp;
 }
 
