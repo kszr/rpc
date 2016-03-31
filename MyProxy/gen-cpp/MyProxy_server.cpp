@@ -11,10 +11,10 @@
 #include <thrift/transport/TBufferTransports.h>
 
 #include "proxy.cpp"
-#include "../Policies/data-structures/hshtbl.cpp"
-#include "../Policies/data-structures/steque.cpp"
-#include "../Policies/data-structures/indexminpq.cpp"
-#include "../Policies/data-structures/indexrndq.cpp"
+#include "../policies/data-structures/hshtbl.cpp"
+#include "../policies/data-structures/steque.cpp"
+#include "../policies/data-structures/indexminpq.cpp"
+#include "../policies/data-structures/indexrndq.cpp"
 
 static const std::size_t capacity = 1024*1024;
 static const std::size_t minsize = 1;
