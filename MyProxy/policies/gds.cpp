@@ -185,7 +185,7 @@ char* gtcache_get(const std::string key, size_t* val_size) {
   if(e == NULL)
     return NULL;
   
-  cout<<"val_size= "<<e->val_size<<endl;
+  //cout<<"val_size= "<<e->val_size<<endl;
   e->weight = e->val_size > 0 ? 1.0/e->val_size : std::numeric_limits<double>::infinity(); // Revert weight to old default.
   indexminpq_increasekey(&eviction_queue, e->id, (indexminpq_key) e);
   

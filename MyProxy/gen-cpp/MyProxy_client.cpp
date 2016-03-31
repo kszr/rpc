@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
     transport->open();
     string webcontent;
     //string url= "www.google.com";
-    load_url_list("../workloads/lru_beats_lfu.txt");
+    load_url_list("../workloads/rnd_beats_lru.txt");
     for(auto& str: urllist) {
         client.httpget_1(webcontent, str);
         //cout << "Web content: "<<webcontent << endl;
