@@ -23,11 +23,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <iostream>
 #include <sys/time.h>
 #include "gtcache.h"
 #include "data-structures/hshtbl.h"
 #include "data-structures/indexminpq.h"
 #include "data-structures/steque.h"
+
+using namespace std;
 
 typedef struct{
   char* key;
@@ -182,6 +185,7 @@ char* gtcache_get(const std::string key, size_t* val_size) {
   if(e == NULL)
     return NULL;
   
+  cout<<"val_size= "<<e->val_size<<endl;
   e->weight = 1/e->val_size; // Revert weight to old default.
   indexminpq_increasekey(&eviction_queue, e->id, (indexminpq_key) e);
   

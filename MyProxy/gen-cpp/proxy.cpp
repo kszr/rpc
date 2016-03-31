@@ -5,9 +5,9 @@
 #include <rpc/rpc.h>
 #include <sys/dir.h>
 
-#include "../policies/lru.cpp"
-//#include "../Policies/rnd.cpp"
-//#include "../policies/gds.cpp"
+//#include "../policies/lru.cpp"
+//#include "../policies/rnd.cpp"
+#include "../policies/gds.cpp"
 
 using namespace std;
 
@@ -102,13 +102,13 @@ string httpget_1_svc(const string url, struct svc_req* req){
   	temp = temp.substr(body_start_end+1, body_end - body_start_end-1);
   	
   	gtcache_set(url, (char *)temp.c_str(), temp.size());
-//  	cout<<"Cache miss on url "<<url<<endl;
+  	cout<<"Cache miss on url "<<url<<endl;
   	misses++;
   } else {
-//  	cout<<"Cache hit on url "<<url<<endl;
+  	cout<<"Cache hit on url "<<url<<endl;
   }
   
-  cout<<"Size of memory occupied "<<gtcache_memused()<<endl;
+  //cout<<"Size of memory occupied "<<gtcache_memused()<<endl;
   return temp;
 }
 
