@@ -59,9 +59,9 @@ static void load_url_list(const string filepath) {
  * should be a comma-separated string representing a single row.
  */
 static void write_csv_file(vector<string> list, int length, string file_name) {  
-	ofstream output(file_name);
-	for(int i = 0; i < length; i++) {  
-		output << list[i] << endl; 
-	} 
+    ofstream output(file_name);
+    for(int i = 0; i < length; i++) {  
+        output << list[i] << endl; 
+    } 
 }
 
