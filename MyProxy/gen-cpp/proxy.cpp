@@ -97,8 +97,8 @@ string httpget_1_svc(const string url, struct svc_req* req){
   	temp = (string)chunk.memory;
 //  	cout<<"Size of web content: "<<temp.size()<<endl;
   	std::size_t body_start = temp.find("<body");
-        std::size_t body_start_end = temp.find(">", body_start);
-        std::size_t body_end = temp.find("</body>");
+    std::size_t body_start_end = temp.find(">", body_start);
+    std::size_t body_end = temp.find("</body>");
   	temp = temp.substr(body_start_end+1, body_end - body_start_end-1);
   	
   	gtcache_set(url, (char *)temp.c_str(), temp.size());

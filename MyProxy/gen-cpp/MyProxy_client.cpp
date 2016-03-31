@@ -14,6 +14,7 @@ using namespace MyProxy;
 using namespace  std;
 
 static void load_url_list(string filepath);
+static void write_csv_file(vector<string> list, int length, string file_name);
 
 static vector<string> urllist;
 
@@ -27,7 +28,8 @@ int main(int argc, char **argv) {
     string webcontent;
     //string url= "www.google.com";
     load_url_list("../workloads/lru_beats_lfu.txt");
-    for(auto& str: urllist) {
+    
+    for(auto& str : urllist) {
         client.httpget_1(webcontent, str);
         //cout << "Web content: "<<webcontent << endl;
         //cout << str << endl;
@@ -50,5 +52,16 @@ static void load_url_list(const string filepath) {
         urllist.push_back(str);
         //cout << str << endl;
     }
+}
+
+/**
+ * Function that prints array A to a *.csv file. Each element of the vector list
+ * should be a comma-separated string representing a single row.
+ */
+static void write_csv_file(vector<string> list, int length, string file_name) {  
+	ofstream output(file_name);
+	for(int i = 0; i < length; i++) {  
+		output << list[i] << endl; 
+	} 
 }
 
