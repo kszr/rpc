@@ -153,7 +153,7 @@ int gtcache_set(const std::string key, char* value, size_t val_size) {
     if(e->val_size == val_size){
       memcpy(e->value, value, val_size);
       /* Mark e as used, if necessary */
-      e->weight = 1.0/val_size;
+      e->weight = val_size > 0 ? 1.0/val_size : std::numeric_limits<double>::infinity();
       indexminpq_increasekey(&eviction_queue, e->id, (indexminpq_key) e);
       return 0;
     }
@@ -186,7 +186,7 @@ char* gtcache_get(const std::string key, size_t* val_size) {
     return NULL;
   
   cout<<"val_size= "<<e->val_size<<endl;
-  e->weight = 1/e->val_size; // Revert weight to old default.
+  e->weight = e->val_size > 0 ? 1.0/e->val_size : std::numeric_limits<double>::infinity(); // Revert weight to old default.
   indexminpq_increasekey(&eviction_queue, e->id, (indexminpq_key) e);
   
   if( val_size != NULL)
