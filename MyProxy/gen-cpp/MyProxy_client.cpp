@@ -27,9 +27,11 @@ int main(int argc, char **argv) {
     client.ping();
     string webcontent;
     //string url= "www.google.com";
-    load_url_list("../workloads/lfu_beats_lru.txt");
+    load_url_list("../workloads/lru_beats_lfu.txt");
     for(auto& str: urllist) {
-        //client.httpget_1(webcontent, str);
+        client.httpget_1(webcontent, str);
+        //cout << "Web content: "<<webcontent << endl;
+        //cout << str << endl;
     }
     //cout<<"The web page content for URL: "<<url<<" is:" <<webcontent<<endl;
     transport->close();
@@ -46,7 +48,7 @@ static void load_url_list(const string filepath) {
     while (std::getline(file, str))
     {
         urllist.push_back(str);
-        cout << str << endl;
+        //cout << str << endl;
     }
 }
 

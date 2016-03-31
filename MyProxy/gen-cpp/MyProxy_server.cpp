@@ -53,8 +53,8 @@ class MyProxyHandler : virtual public MyProxyIf {
 
   void httpget_1(std::string& _return, const std::string& url) {
     // Your implementation goes here
-   int currsize;
-   currsize= gtcache_memused();
+//   int currsize;
+//   currsize= gtcache_memused();
 //    cout<<"Size filled: "<<currsize<<endl;
 //    printf("httpget_1\n");
     _return = httpget_1_svc(url, NULL);
