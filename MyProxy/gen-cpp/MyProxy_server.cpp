@@ -48,7 +48,8 @@ class MyProxyHandler : virtual public MyProxyIf {
    */
   void ping() {
     // Your implementation goes here
-    printf("ping\n");
+    //printf("Server Pinged\n");
+    cout<<"Total Misses= "<<misses<<endl;
   }
 
   void httpget_1(std::string& _return, const std::string& url) {

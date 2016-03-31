@@ -5,6 +5,9 @@
  *  @generated
  */
 #include "MyProxy.h"
+#include <iostream>
+
+using namespace std;
 
 namespace MyProxy {
 
@@ -68,6 +71,7 @@ uint32_t MyProxy_ping_pargs::write(::apache::thrift::protocol::TProtocol* oprot)
 
 
 MyProxy_ping_result::~MyProxy_ping_result() throw() {
+//cout<<"throw result"<<endl;
 }
 
 
@@ -145,6 +149,7 @@ uint32_t MyProxy_ping_presult::read(::apache::thrift::protocol::TProtocol* iprot
 
 
 MyProxy_httpget_1_args::~MyProxy_httpget_1_args() throw() {
+//cout<<"throw result http"<<endl;
 }
 
 
@@ -200,6 +205,7 @@ uint32_t MyProxy_httpget_1_args::write(::apache::thrift::protocol::TProtocol* op
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
+//cout<<"http write args"<<endl;
   return xfer;
 }
 
@@ -219,6 +225,7 @@ uint32_t MyProxy_httpget_1_pargs::write(::apache::thrift::protocol::TProtocol* o
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
+//cout<<"http write pargs"<<endl;
   return xfer;
 }
 
@@ -269,7 +276,7 @@ uint32_t MyProxy_httpget_1_result::read(::apache::thrift::protocol::TProtocol* i
 }
 
 uint32_t MyProxy_httpget_1_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
-
+//cout<<"http write result"<<endl;
   uint32_t xfer = 0;
 
   xfer += oprot->writeStructBegin("MyProxy_httpget_1_result");
@@ -286,11 +293,12 @@ uint32_t MyProxy_httpget_1_result::write(::apache::thrift::protocol::TProtocol* 
 
 
 MyProxy_httpget_1_presult::~MyProxy_httpget_1_presult() throw() {
+//cout<<"http throw presult"<<endl;
 }
 
 
 uint32_t MyProxy_httpget_1_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
-
+//cout<<"http presult"<<endl;
   apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
   std::string fname;
@@ -390,6 +398,7 @@ void MyProxyClient::httpget_1(std::string& _return, const std::string& url)
 
 void MyProxyClient::send_httpget_1(const std::string& url)
 {
+//cout<<"http send"<<endl;
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("httpget_1", ::apache::thrift::protocol::T_CALL, cseqid);
 
@@ -404,7 +413,7 @@ void MyProxyClient::send_httpget_1(const std::string& url)
 
 void MyProxyClient::recv_httpget_1(std::string& _return)
 {
-
+//cout<<"http recv"<<endl;
   int32_t rseqid = 0;
   std::string fname;
   ::apache::thrift::protocol::TMessageType mtype;
@@ -461,6 +470,7 @@ bool MyProxyProcessor::dispatchCall(::apache::thrift::protocol::TProtocol* iprot
 
 void MyProxyProcessor::process_ping(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
+//cout<<"process ping"<<endl;
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
     ctx = this->eventHandler_->getContext("MyProxy.ping", callContext);
@@ -514,6 +524,7 @@ void MyProxyProcessor::process_ping(int32_t seqid, ::apache::thrift::protocol::T
 
 void MyProxyProcessor::process_httpget_1(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
+//cout<<"process http"<<endl;
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
     ctx = this->eventHandler_->getContext("MyProxy.httpget_1", callContext);
@@ -575,12 +586,14 @@ void MyProxyProcessor::process_httpget_1(int32_t seqid, ::apache::thrift::protoc
 
 void MyProxyConcurrentClient::ping()
 {
+//cout<<"ping"<<endl;
   int32_t seqid = send_ping();
   recv_ping(seqid);
 }
 
 int32_t MyProxyConcurrentClient::send_ping()
 {
+//cout<<"send ping"<<endl;
   int32_t cseqid = this->sync_.generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(&this->sync_);
   oprot_->writeMessageBegin("ping", ::apache::thrift::protocol::T_CALL, cseqid);
@@ -598,7 +611,7 @@ int32_t MyProxyConcurrentClient::send_ping()
 
 void MyProxyConcurrentClient::recv_ping(const int32_t seqid)
 {
-
+//cout<<"recv ping"<<endl;
   int32_t rseqid = 0;
   std::string fname;
   ::apache::thrift::protocol::TMessageType mtype;
@@ -652,12 +665,14 @@ void MyProxyConcurrentClient::recv_ping(const int32_t seqid)
 
 void MyProxyConcurrentClient::httpget_1(std::string& _return, const std::string& url)
 {
+//cout<<"http"<<endl;
   int32_t seqid = send_httpget_1(url);
   recv_httpget_1(_return, seqid);
 }
 
 int32_t MyProxyConcurrentClient::send_httpget_1(const std::string& url)
 {
+//cout<<"http send"<<endl;
   int32_t cseqid = this->sync_.generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(&this->sync_);
   oprot_->writeMessageBegin("httpget_1", ::apache::thrift::protocol::T_CALL, cseqid);
@@ -676,6 +691,7 @@ int32_t MyProxyConcurrentClient::send_httpget_1(const std::string& url)
 
 void MyProxyConcurrentClient::recv_httpget_1(std::string& _return, const int32_t seqid)
 {
+//cout<<"http recv"<<endl;
 
   int32_t rseqid = 0;
   std::string fname;

@@ -24,7 +24,6 @@ int main(int argc, char **argv) {
     
     MyProxyClient client(protocol);
     transport->open();
-    client.ping();
     string webcontent;
     //string url= "www.google.com";
     load_url_list("../workloads/lru_beats_lfu.txt");
@@ -34,6 +33,7 @@ int main(int argc, char **argv) {
         //cout << str << endl;
     }
     //cout<<"The web page content for URL: "<<url<<" is:" <<webcontent<<endl;
+    client.ping();
     transport->close();
 
     return 0;
