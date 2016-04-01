@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
         //cout << "Web content: "<<webcontent << endl;
         //cout << str << endl;
     } 
-    write_csv_file(time_list, time_list.size(), "../results/access_time_gds_lru-bad.csv");
+    write_csv_file(time_list, time_list.size(), "access_time_gds_lru-bad.csv");
     //cout<<"The web page content for URL: "<<url<<" is:" <<webcontent<<endl;
     client.ping();
     transport->close();
