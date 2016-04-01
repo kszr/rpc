@@ -1,5 +1,0 @@
-http://www.google.com/
-https://www.facebook.com/
-http://www.youtube.com/
-https://www.yahoo.com/
-http://www.blogspot.com/
