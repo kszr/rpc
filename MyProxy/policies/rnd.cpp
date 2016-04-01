@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/time.h>
 #include "gtcache.h"
 #include "data-structures/hshtbl.h"
 #include "data-structures/indexrndq.h"
@@ -109,7 +110,7 @@ char* gtcache_get(const string key, size_t* val_size){
   return ans;
 }
 
-int gtcache_set(const string key, char *value, size_t val_size){
+int gtcache_set(const string key, char *value, size_t val_size, double timeTaken){
   int needed_size;
   cache_entry_t* e;
   char *ch = (char *) key.c_str();

@@ -4,6 +4,7 @@
 #include <curl/curl.h>
 #include <rpc/rpc.h>
 #include <sys/dir.h>
+#include <sys/time.h>
 
 //#include "../policies/lru.cpp"
 //#include "../policies/rnd.cpp"
@@ -17,6 +18,11 @@ struct MemoryStruct {
 };
  
 int misses = 0;
+
+double timeit(struct timeval &start,struct timeval &end){
+double delta = ((end.tv_sec - start.tv_sec) * 1000000u + end.tv_usec - start.tv_usec) / 1.e6;
+return delta;
+}
 
 static size_t
 WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
@@ -94,8 +100,11 @@ string httpget_1_svc(const string url, struct svc_req* req){
   std::string temp;
   
   if ((chunk.memory=gtcache_get(url, &chunk.size)) == NULL) {
+  struct timeval t1,t2;
+  gettimeofday(&t1, NULL);
   	get_by_curl(url, &chunk);
-  	
+  gettimeofday(&t2, NULL);
+  double timeTaken = timeit(t1,t2);	
   	temp = (string)chunk.memory;
 //  	cout<<"Size of web content: "<<temp.size()<<endl;
   	std::size_t body_start = temp.find("<body");
@@ -103,7 +112,7 @@ string httpget_1_svc(const string url, struct svc_req* req){
     std::size_t body_end = temp.find("</body>");
   	temp = temp.substr(body_start_end+1, body_end - body_start_end-1);
   	
-  	gtcache_set(url, (char *)temp.c_str(), temp.size());
+  	gtcache_set(url, (char *)temp.c_str(), temp.size(), timeTaken);
   	// cout<<"Cache miss on url "<<url<<endl;
   	misses++;
   } else {
