@@ -4,3 +4,4 @@
 MyProxy_server
 MyProxy_client
 .DS_Store
+*.dSYM
