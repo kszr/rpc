@@ -29,8 +29,10 @@ int main(int argc, char **argv) {
     //string url= "www.google.com";
     //load_url_list("../workloads/rnd_beats_lru.txt");
     Workload workload = Workload();
-    workload.generate_lru_good_workload();
-    urllist = workload.get_lru_good_workload();
+    
+    /* Specify workload below */
+    workload.generate_lru_bad_workload();
+    urllist = workload.get_lru_bad_workload();
     
     for(auto& str : urllist) {
         client.httpget_1(webcontent, str);
