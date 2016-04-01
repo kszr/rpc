@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <iostream>
 #include <string.h>
+#include <sstream>
+#include <fstream> 
 #include <curl/curl.h>
 #include <thrift/protocol/TBinaryProtocol.h>
 #include <thrift/server/TSimpleServer.h>
@@ -41,12 +43,10 @@ int misses = 0;
 
 // using boost::shared_ptr;
 
+    vector<string> memused_list;
+    vector<string> hitmiss_list;
 
-/*
-extern "C" {
-string httpget_1_svc(const string url, struct svc_req* req);
-}
-*/
+static void write_csv_file(vector<string> list, int length, string file_name);
 
 double timeit(struct timeval &start,struct timeval &end) {
     double delta = ((end.tv_sec - start.tv_sec) * 1000000u + end.tv_usec - start.tv_usec) / 1.e6;
@@ -124,7 +124,7 @@ void get_by_curl(const string url, struct MemoryStruct* chunk) {
 
 string httpget_1_svc(const string url, struct svc_req* req){
     static struct MemoryStruct chunk = {NULL, 0};
-
+    
     std::string temp;
 
     if ((chunk.memory=gtcache_get(url, &chunk.size)) == NULL) {
@@ -142,14 +142,29 @@ string httpget_1_svc(const string url, struct svc_req* req){
 
         gtcache_set(url, (char *)temp.c_str(), temp.size(), timeTaken);
         // cout<<"Cache miss on url "<<url<<endl;
+        
+        std::string temp;
+        temp = url + ",0";
+        hitmiss_list.push_back(temp);
         misses++;
     } else {
         //	cout<<"Cache hit on url "<<url<<endl;
+        std::string temp;
+        temp = url + ",1";
+        hitmiss_list.push_back(temp);
     }
 
     // cout << "Url : " << url << " size: " << temp.size() << endl;
     //   cout << temp << endl;
     //cout<<"Size of memory occupied "<<gtcache_memused()<<endl;
+    
+    int usedmem = gtcache_memused();
+    std::stringstream ss;
+        std::string s;
+        ss << usedmem;
+        ss >> s;
+        s = url+s;
+    memused_list.push_back(s);
     return temp;
 }
 
@@ -168,7 +183,12 @@ class MyProxyHandler : virtual public MyProxyIf {
         void ping() {
             // Your implementation goes here
             //printf("Server Pinged\n");
+            
+            /* REPLACE with the right output pathname. */
+    	    write_csv_file(memused_list, memused_list.size(), "memused.csv");
+    	    write_csv_file(hitmiss_list, hitmiss_list.size(), "hitmiss.csv");
             cout<<"Total Misses= "<<misses<<endl;
+            
         }
 
         void httpget_1(std::string& _return, const std::string& url) {
@@ -184,6 +204,18 @@ class MyProxyHandler : virtual public MyProxyIf {
         }
 
 };
+
+/**
+ * Function that prints array A to a *.csv file. Each element of the vector list
+ * should be a comma-separated string representing a single row.
+ */
+static void write_csv_file(vector<string> list, int length, string file_name) {  
+    ofstream output(file_name);
+    for(int i = 0; i < length; i++) {  
+        output << list[i] << endl; 
+    } 
+}
+
 
 int main(int argc, char **argv) {
     int port = 9090;
