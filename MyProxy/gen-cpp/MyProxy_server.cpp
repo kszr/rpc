@@ -155,35 +155,35 @@ string httpget_1_svc(const string url, struct svc_req* req){
 
 class MyProxyHandler : virtual public MyProxyIf {
     public:
-    MyProxyHandler() {
-        // Your initialization goes here
-    }
+        MyProxyHandler() {
+            // Your initialization goes here
+        }
 
-    /**
-    * A method definition looks like C code. It has a return type, arguments,
-    * and optionally a list of exceptions that it may throw. Note that argument
-    * lists and exception lists are specified using the exact same syntax as
-    * field lists in struct or exception definitions.
-    */
-    void ping() {
-        // Your implementation goes here
-        //printf("Server Pinged\n");
-        cout<<"Total Misses= "<<misses<<endl;
-    }
+        /**
+        * A method definition looks like C code. It has a return type, arguments,
+        * and optionally a list of exceptions that it may throw. Note that argument
+        * lists and exception lists are specified using the exact same syntax as
+        * field lists in struct or exception definitions.
+        */
+        void ping() {
+            // Your implementation goes here
+            //printf("Server Pinged\n");
+            cout<<"Total Misses= "<<misses<<endl;
+        }
 
-    void httpget_1(std::string& _return, const std::string& url) {
-        // Your implementation goes here
-        //   int currsize;
-        //   currsize= gtcache_memused();
-        //    cout<<"Size filled: "<<currsize<<endl;
-        //    printf("httpget_1\n");
-        _return = httpget_1_svc(url, NULL);
-        //    std::cout<<"Size of web content: "<<_return.size()<<endl;
-        //    currsize= gtcache_memused();
-        //    std::cout<<"Size filled: "<<currsize<<endl;
-    }
+        void httpget_1(std::string& _return, const std::string& url) {
+            // Your implementation goes here
+            //   int currsize;
+            //   currsize= gtcache_memused();
+            //    cout<<"Size filled: "<<currsize<<endl;
+            //    printf("httpget_1\n");
+            _return = httpget_1_svc(url, NULL);
+            //    std::cout<<"Size of web content: "<<_return.size()<<endl;
+            //    currsize= gtcache_memused();
+            //    std::cout<<"Size filled: "<<currsize<<endl;
+        }
 
-    };
+};
 
 int main(int argc, char **argv) {
     int port = 9090;
