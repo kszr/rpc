@@ -65,10 +65,6 @@ int keycmp(indexminpq_key a, indexminpq_key b){
     return 0;
 }
 
-static void update_weights(int diff) {
-    
-}
-
 static void deleteentry(cache_entry_t* e){
   /*
     e is assumed to have already been evicted from the priority queue.
