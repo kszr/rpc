@@ -194,15 +194,10 @@ int main(int argc, char **argv) {
     boost::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
     TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
     
-    capacity = 128*1024;
-    
-    while(capacity < 2048*1024) {
-        cout << "Cache size : " << capacity/1024 << endl;
-        gtcache_init (capacity, minsize, 1);
-        server.serve();
-        gtcache_destroy ();
-        capacity *= 2;
-    }
+    cout << "Cache size : " << capacity/1024 << endl;
+    gtcache_init (capacity, minsize, 1);
+    server.serve();
+    gtcache_destroy ();
 
     return 0;
 }
