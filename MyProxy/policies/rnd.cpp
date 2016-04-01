@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string>
 #include <string.h>
 #include <sys/time.h>
 #include "gtcache.h"

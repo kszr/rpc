@@ -5,7 +5,7 @@
 #include <protocol/TBinaryProtocol.h>
 #include <iostream>
 #include <fstream> 
-#include "../workloads/workload_generator.cpp"
+#include "../workloads/workload_generator.hpp"
 #include <sstream>
 
 using namespace apache::thrift;
@@ -33,10 +33,9 @@ int main(int argc, char **argv) {
     transport->open();
     string webcontent;
     //string url= "www.google.com";
-    //load_url_list("../workloads/rnd_beats_lru.txt");
+   
+    /* SPECIFY WORKLOAD BELOW */
     Workload workload = Workload();
-    
-    /* Specify workload below */
     workload.generate_gds_good_workload();
     urllist = workload.get_gds_good_workload();
     
@@ -60,7 +59,8 @@ int main(int argc, char **argv) {
         //cout << str << endl;
     }
     
-    //write_csv_file(time_list, time_list.size(), "access_time_gds_lru-bad.csv");
+    /* REPLACE with the right output pathname. */
+    write_csv_file(time_list, time_list.size(), "../results/access_time/gds_gds-good.csv");
     
     //cout<<"The web page content for URL: "<<url<<" is:" <<webcontent<<endl;
     client.ping();

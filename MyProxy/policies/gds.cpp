@@ -29,6 +29,7 @@
 #include "data-structures/hshtbl.h"
 #include "data-structures/indexminpq.h"
 #include "data-structures/steque.h"
+#include <limits>
 
 using namespace std;
 
