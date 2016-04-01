@@ -30,6 +30,7 @@ int main(int argc, char **argv) {
     //load_url_list("../workloads/rnd_beats_lru.txt");
     Workload workload = Workload();
     workload.generate_lru_good_workload();
+    urllist = workload.get_lru_good_workload();
     
     for(auto& str : urllist) {
         client.httpget_1(webcontent, str);
