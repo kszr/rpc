@@ -15,8 +15,8 @@
  *  - If p is already in the cache, set H(p) to L + c(p)/s(p). 
  *  - If p is not in the cache,
  *      - While there is not enough room in the cache for p,
- *      - Let L be the minimum H(q) over all pages q in the cache.
- *      - Evict q such that H(q) = L.
+ *          - Let L be the minimum H(q) over all pages q in the cache.
+ *          - Evict q such that H(q) = L.
  *  - Bring p into the cache and set H(p) to be L+c(p)/s(p) 
  */
  

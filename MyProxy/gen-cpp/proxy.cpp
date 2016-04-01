@@ -65,6 +65,8 @@ void get_by_curl(const string url, struct MemoryStruct* chunk){
   /* some servers don't like requests that are made without a user-agent
      field, so we provide one */ 
   curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
+  
+  curl_easy_setopt(curl_handle, CURLOPT_FOLLOWLOCATION, 1L); 
  
   /* get it! */ 
   res = curl_easy_perform(curl_handle);
@@ -102,12 +104,14 @@ string httpget_1_svc(const string url, struct svc_req* req){
   	temp = temp.substr(body_start_end+1, body_end - body_start_end-1);
   	
   	gtcache_set(url, (char *)temp.c_str(), temp.size());
-  	cout<<"Cache miss on url "<<url<<endl;
+  	// cout<<"Cache miss on url "<<url<<endl;
   	misses++;
   } else {
-  	cout<<"Cache hit on url "<<url<<endl;
+  //	cout<<"Cache hit on url "<<url<<endl;
   }
   
+  cout << "Url : " << url << " size: " << temp.size() << endl;
+//   cout << temp << endl;
   //cout<<"Size of memory occupied "<<gtcache_memused()<<endl;
   return temp;
 }
