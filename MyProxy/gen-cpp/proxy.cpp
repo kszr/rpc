@@ -20,8 +20,8 @@ struct MemoryStruct {
 int misses = 0;
 
 double timeit(struct timeval &start,struct timeval &end){
-double delta = ((end.tv_sec - start.tv_sec) * 1000000u + end.tv_usec - start.tv_usec) / 1.e6;
-return delta;
+    double delta = ((end.tv_sec - start.tv_sec) * 1000000u + end.tv_usec - start.tv_usec) / 1.e6;
+    return delta;
 }
 
 static size_t
@@ -119,7 +119,7 @@ string httpget_1_svc(const string url, struct svc_req* req){
   //	cout<<"Cache hit on url "<<url<<endl;
   }
   
-  cout << "Url : " << url << " size: " << temp.size() << endl;
+  // cout << "Url : " << url << " size: " << temp.size() << endl;
 //   cout << temp << endl;
   //cout<<"Size of memory occupied "<<gtcache_memused()<<endl;
   return temp;

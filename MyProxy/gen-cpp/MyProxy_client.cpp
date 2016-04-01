@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream> 
 #include "../workloads/workload_generator.cpp"
+#include <sstream>
 
 using namespace apache::thrift;
 using namespace apache::thrift::protocol;
@@ -17,6 +18,11 @@ using namespace  std;
 static void write_csv_file(vector<string> list, int length, string file_name);
 
 static vector<string> urllist;
+
+double timeit(struct timeval &start,struct timeval &end){
+    double delta = ((end.tv_sec - start.tv_sec) * 1000000u + end.tv_usec - start.tv_usec) / 1.e6;
+    return delta;
+}
 
 int main(int argc, char **argv) {
     boost::shared_ptr<TSocket> socket(new TSocket("localhost", 9090));
@@ -34,11 +40,26 @@ int main(int argc, char **argv) {
     workload.generate_lru_bad_workload();
     urllist = workload.get_lru_bad_workload();
     
+    vector<string> time_list;
+    
     for(auto& str : urllist) {
+        struct timeval t1,t2;
+        gettimeofday(&t1, NULL);
         client.httpget_1(webcontent, str);
+        gettimeofday(&t2, NULL);
+        double timeTaken = timeit(t1,t2);	
+        
+        std::stringstream ss;
+        std::string s;
+        ss << timeTaken;
+        ss >> s;
+        
+        time_list.push_back(s);
+        
         //cout << "Web content: "<<webcontent << endl;
         //cout << str << endl;
     } 
+    write_csv_file(time_list, time_list.size(), "../results/access_time_gds_lru-bad.csv");
     //cout<<"The web page content for URL: "<<url<<" is:" <<webcontent<<endl;
     client.ping();
     transport->close();
