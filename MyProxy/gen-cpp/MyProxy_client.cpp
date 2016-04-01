@@ -36,8 +36,8 @@ int main(int argc, char **argv) {
    
     /* SPECIFY WORKLOAD BELOW */
     Workload workload = Workload();
-    workload.generate_gds_good_workload();
-    urllist = workload.get_gds_good_workload();
+    workload.generate_lru_good_workload();
+    urllist = workload.get_lru_good_workload();
     
     vector<string> time_list;
     
@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
     }
     
     /* REPLACE with the right output pathname. */
-    write_csv_file(time_list, time_list.size(), "../results/access_time/gds_gds-good.csv");
+    write_csv_file(time_list, time_list.size(), "../results/access_time/lru_lru-good.csv");
     
     //cout<<"The web page content for URL: "<<url<<" is:" <<webcontent<<endl;
     client.ping();

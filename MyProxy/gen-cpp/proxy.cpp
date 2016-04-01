@@ -6,9 +6,9 @@
 #include <sys/dir.h>
 #include <sys/time.h>
 
-//#include "../policies/lru.cpp"
+#include "../policies/lru.cpp"
 //#include "../policies/rnd.cpp"
- #include "../policies/gds.cpp"
+// #include "../policies/gds.cpp"
 
 using namespace std;
 
