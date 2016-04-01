@@ -25,7 +25,7 @@ int gtcache_init(size_t capacity, size_t min_entry_size, int num_levels);
  * The gtcache_set procedure associates the first val_size bytes after
  * the pointer value with the key.  A defensive copy of the data is made.
  */
- int gtcache_set(const string key, char* value, size_t val_size);
+ int gtcache_set(const string key, char* value, size_t val_size, double timeTaken);
 
 /*
  * The gtcache_get procedure returns a copy of the data associated

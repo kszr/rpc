@@ -134,7 +134,7 @@ char* gtcache_get(const string key, size_t* val_size){
   return ans;
 }
 
-int gtcache_set(const string key, char *value, size_t val_size){
+int gtcache_set(const string key, char *value, size_t val_size, double timeTaken){
   cache_entry_t* e;
   char *ch = (char *) key.c_str();
   
@@ -154,6 +154,7 @@ int gtcache_set(const string key, char *value, size_t val_size){
     if(e->val_size == val_size){
       memcpy(e->value, value, val_size);
       /* Mark e as used, if necessary */
+      cout<<"UH OH, MAYDAY!!!"<<endl;
       gettimeofday(&e->tv, NULL);
       indexminpq_increasekey(&eviction_queue, e->id, (indexminpq_key) &e->tv);
       return 0;

@@ -79,7 +79,7 @@ static void deleteentry(cache_entry_t* e){
   steque_push(&available_ids, (void *) e->id);
 }
 
-static cache_entry_t* createentry(char* key, void* value, size_t val_size){
+static cache_entry_t* createentry(char* key, void* value, size_t val_size, double timeTaken){
   cache_entry_t* e;
   size_t key_len;
 
@@ -96,7 +96,7 @@ static cache_entry_t* createentry(char* key, void* value, size_t val_size){
   e->key = (char*) malloc(key_len);
   e->value = (void*) malloc(val_size);
   e->val_size = val_size;
-  e->weight = least_weight + 1.0/val_size;
+  e->weight = least_weight + timeTaken/(val_size*val_size);
   memcpy(e->key, key, key_len);
   memcpy(e->value, value, val_size);
 
@@ -132,7 +132,7 @@ int gtcache_init(size_t capacity, size_t min_entry_size, int num_levels) {
   return 0;
 }
 
-int gtcache_set(const std::string key, char* value, size_t val_size) {
+int gtcache_set(const std::string key, char* value, size_t val_size, double timeTaken) {
   cache_entry_t* e;
   char *ch = (char *) key.c_str();
   
@@ -149,6 +149,7 @@ int gtcache_set(const std::string key, char* value, size_t val_size) {
     if(e->val_size == val_size){
       memcpy(e->value, value, val_size);
       /* Mark e as used, if necessary */
+      cout<<"UH OH, MAYDAY!!!"<<endl;
       e->weight = val_size > 0 ? 1.0/val_size : std::numeric_limits<double>::infinity();
       indexminpq_increasekey(&eviction_queue, e->id, (indexminpq_key) e);
       return 0;
@@ -163,7 +164,7 @@ int gtcache_set(const std::string key, char* value, size_t val_size) {
   while(used_mem + val_size > cache_capacity)
     deleteentry(&cache[indexminpq_delmin(&eviction_queue)]);
 
-  if( createentry(ch, value, val_size) == NULL){
+  if( createentry(ch, value, val_size, timeTaken) == NULL){
     fprintf(stderr, "gtcache_set: unable to create cache_entry\n");
     return -1;
   }
@@ -182,7 +183,7 @@ char* gtcache_get(const std::string key, size_t* val_size) {
     return NULL;
   
   //cout<<"val_size= "<<e->val_size<<endl;
-  e->weight = e->val_size > 0 ? 1.0/e->val_size : std::numeric_limits<double>::infinity(); // Revert weight to old default.
+  e->weight = e->val_size > 0 ? (e->weight + least_weight) : std::numeric_limits<double>::infinity(); // Revert weight to old default.
   indexminpq_increasekey(&eviction_queue, e->id, (indexminpq_key) e);
   
   if( val_size != NULL)
