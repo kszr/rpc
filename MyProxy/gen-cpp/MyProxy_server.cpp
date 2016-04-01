@@ -13,7 +13,6 @@
 #include <sys/time.h>
 
 #include "MyProxy.h"
-//#include "proxy.cpp"
 #include "../policies/data-structures/hshtbl.cpp"
 #include "../policies/data-structures/steque.cpp"
 #include "../policies/data-structures/indexminpq.cpp"
@@ -187,18 +186,18 @@ class MyProxyHandler : virtual public MyProxyIf {
     };
 
 int main(int argc, char **argv) {
-  int port = 9090;
-  ::boost::shared_ptr<MyProxyHandler> handler(new MyProxyHandler());
-  ::boost::shared_ptr<TProcessor> processor(new MyProxyProcessor(handler));
-  ::boost::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
-  ::boost::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
-  ::boost::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
-  TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
-  
-  gtcache_init (capacity, minsize, 1);
-  server.serve();
-  gtcache_destroy ();
-  
-  return 0;
+    int port = 9090;
+    ::boost::shared_ptr<MyProxyHandler> handler(new MyProxyHandler());
+    ::boost::shared_ptr<TProcessor> processor(new MyProxyProcessor(handler));
+    ::boost::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
+    ::boost::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
+    ::boost::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
+    TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
+
+    gtcache_init (capacity, minsize, 1);
+    server.serve();
+    gtcache_destroy ();
+
+    return 0;
 }
 
