@@ -1,0 +1,5 @@
+http://amazon.com
+http://google.de
+http://bing.com
+http://google.co.uk
+http://google.co.jp

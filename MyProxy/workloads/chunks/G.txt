@@ -1,0 +1,4 @@
+http://microsoft.com
+http://go.com
+http://cnn.com
+http://ehow.com
