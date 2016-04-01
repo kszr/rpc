@@ -22,7 +22,7 @@
 //#include "../policies/rnd.cpp"
 // #include "../policies/gds.cpp"
 
-static const std::size_t capacity = 1024*1024;
+static std::size_t capacity = 1024;   // KB. Multiply by 1024 when initializing.
 static const std::size_t minsize = 1;
 
 using namespace ::apache::thrift;
@@ -187,16 +187,22 @@ class MyProxyHandler : virtual public MyProxyIf {
 
 int main(int argc, char **argv) {
     int port = 9090;
-    ::boost::shared_ptr<MyProxyHandler> handler(new MyProxyHandler());
-    ::boost::shared_ptr<TProcessor> processor(new MyProxyProcessor(handler));
-    ::boost::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
-    ::boost::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
-    ::boost::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
+    boost::shared_ptr<MyProxyHandler> handler(new MyProxyHandler());
+    boost::shared_ptr<TProcessor> processor(new MyProxyProcessor(handler));
+    boost::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
+    boost::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
+    boost::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
     TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
-
-    gtcache_init (capacity, minsize, 1);
-    server.serve();
-    gtcache_destroy ();
+    
+    capacity = 128*1024;
+    
+    while(capacity < 2048*1024) {
+        cout << "Cache size : " << capacity/1024 << endl;
+        gtcache_init (capacity, minsize, 1);
+        server.serve();
+        gtcache_destroy ();
+        capacity *= 2;
+    }
 
     return 0;
 }
