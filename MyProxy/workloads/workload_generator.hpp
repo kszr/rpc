@@ -17,7 +17,7 @@ class Workload {
         void initialize_chunk_store();
         void generate_lru_good_workload();
         void generate_lru_bad_workload();
-        void generate_gds_workload();
+        void generate_gds_good_workload();
         
         std::vector<std::string> get_lru_good_workload() {
             return lru_good;
@@ -27,7 +27,7 @@ class Workload {
             return lru_bad;
         }
         
-        std::vector<std::string> get_gds_workload() {
+        std::vector<std::string> get_gds_good_workload() {
             return gds_good;
         }
 };

@@ -76,6 +76,21 @@ void Workload::generate_lru_bad_workload() {
     // } 
 }
 
-void Workload::generate_gds_workload() {
+/**
+ * Repeating chunks D and E between sequences of three chunks that were randomly generated.
+ */
+void Workload::generate_gds_good_workload() {
+    std::string sequence = "AFUDEDSEDERQZDETXVDEZEHDEXDZDETAVDEFBRDEOP";
+    for(auto& ch : sequence) {
+        std::stringstream ss;
+        std::string s;
+        ss << ch;
+        ss >> s;
+        gds_good.insert(gds_good.end(), chunk_store[s].begin(), chunk_store[s].end());
+    }
     
+    // std::ofstream output("gds_good.txt");
+    // for(int i = 0; i < gds_good.size(); i++) {  
+    //     output << gds_good[i] << std::endl; 
+    // } 
 }

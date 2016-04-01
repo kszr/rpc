@@ -37,8 +37,8 @@ int main(int argc, char **argv) {
     Workload workload = Workload();
     
     /* Specify workload below */
-    workload.generate_lru_bad_workload();
-    urllist = workload.get_lru_bad_workload();
+    workload.generate_gds_good_workload();
+    urllist = workload.get_gds_good_workload();
     
     vector<string> time_list;
     
@@ -58,27 +58,16 @@ int main(int argc, char **argv) {
         
         //cout << "Web content: "<<webcontent << endl;
         //cout << str << endl;
-    } 
-    write_csv_file(time_list, time_list.size(), "access_time_gds_lru-bad.csv");
+    }
+    
+    //write_csv_file(time_list, time_list.size(), "access_time_gds_lru-bad.csv");
+    
     //cout<<"The web page content for URL: "<<url<<" is:" <<webcontent<<endl;
     client.ping();
     transport->close();
 
     return 0;
 }
-
-/**
- * Loads a list of URLs from a file.
- */
-// static void load_url_list(const string filepath) {
-//     ifstream file(filepath.c_str());
-//     string str; 
-//     while (std::getline(file, str))
-//     {
-//         urllist.push_back(str);
-//         //cout << str << endl;
-//     }
-// }
 
 /**
  * Function that prints array A to a *.csv file. Each element of the vector list
