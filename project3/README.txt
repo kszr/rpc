@@ -1,0 +1,9 @@
+1. In order to build the proxy server-client system, simply run make inside gen-cpp/, making sure that the relevant libraries such as Boost and Apache Thrift are installed.
+2. The main() function for the server is located in gen-cpp/MyProxy_server.cpp
+3. The main() function for the client is located in gen-cpp/MyProxy_client.cpp
+4. The cache size is 1024 KB by default. To change this, simply change the “capacity” constant inside MyProxy_server.cpp.
+5. To change the cache replacement policy, simply uncomment the desired #include directive at the top of MyProxy_server.cpp, and make sure all other cache policies are commented out, since a failure to do so would lead to duplicate definition errors.
+6. To change the workload, call the appropriate method of the Workload object. The Workload class is defined in the workloads/ directory, which is located at the same level as gen-cpp/.
+7. To run the proxy-server, simply run ./MyProxy_server from gen-cpp/.
+8. If you’re running the client on a different machine, be sure to change the first argument to the TSSocket constructor in MyProxy_client.cpp to the IP address of the server’s host computer, and run ./MyProxy_client. If you’re running it on the same machine, set the first argument of the TSSocket constructor to “localhost”, and run ./MyProxy_client from a different terminal window.
+9. CSV files will be generated containing the results of the experiment. The server’s computer will generate data for cache usage and cache miss rate, and the client’s computer will generate data for access time. The name and location of these CSV files can be configured from the main client and server .cpp files.
