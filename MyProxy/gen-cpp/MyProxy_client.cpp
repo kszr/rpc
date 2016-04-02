@@ -25,7 +25,7 @@ double timeit(struct timeval &start,struct timeval &end){
 }
 
 int main(int argc, char **argv) {
-    boost::shared_ptr<TSocket> socket(new TSocket("localhost", 9090));
+    boost::shared_ptr<TSocket> socket(new TSocket("128.61.27.248", 9090));
     boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
     boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
     
@@ -36,8 +36,8 @@ int main(int argc, char **argv) {
    
     /* SPECIFY WORKLOAD BELOW */
     Workload workload = Workload();
-    workload.generate_lru_good_workload();
-    urllist = workload.get_lru_good_workload();
+    workload.generate_gds_good_workload();
+    urllist = workload.get_gds_good_workload();
     
     vector<string> time_list;
     
@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
     }
     
     /* REPLACE with the right output pathname. */
-    write_csv_file(time_list, time_list.size(), "../results/access_time/lru_lru-good.csv");
+    write_csv_file(time_list, time_list.size(), "time_gds-good_0.csv");
     
     //cout<<"The web page content for URL: "<<url<<" is:" <<webcontent<<endl;
     client.ping();
