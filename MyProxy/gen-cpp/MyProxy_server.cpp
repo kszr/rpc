@@ -21,10 +21,10 @@
 #include "../policies/data-structures/indexrndq.cpp"
 
 #include "../policies/lru.cpp"
-//#include "../policies/rnd.cpp"
+// #include "../policies/rnd.cpp"
 // #include "../policies/gds.cpp"
 
-static std::size_t capacity = 1024;   // KB. Multiply by 1024 when initializing.
+static std::size_t capacity = 0*1024;   
 static const std::size_t minsize = 1;
 
 using namespace ::apache::thrift;
@@ -44,7 +44,7 @@ int misses = 0;
 // using boost::shared_ptr;
 
     vector<string> memused_list;
-    vector<string> hitmiss_list;
+    //vector<string> hitmiss_list;
 
 static void write_csv_file(vector<string> list, int length, string file_name);
 
@@ -145,13 +145,13 @@ string httpget_1_svc(const string url, struct svc_req* req){
         
         std::string temp;
         temp = url + ",0";
-        hitmiss_list.push_back(temp);
+        //hitmiss_list.push_back(temp);
         misses++;
     } else {
         //	cout<<"Cache hit on url "<<url<<endl;
         std::string temp;
         temp = url + ",1";
-        hitmiss_list.push_back(temp);
+        //hitmiss_list.push_back(temp);
     }
 
     // cout << "Url : " << url << " size: " << temp.size() << endl;
@@ -163,7 +163,7 @@ string httpget_1_svc(const string url, struct svc_req* req){
         std::string s;
         ss << usedmem;
         ss >> s;
-        s = url+s;
+        s = url+","+s;
     memused_list.push_back(s);
     return temp;
 }
@@ -186,7 +186,7 @@ class MyProxyHandler : virtual public MyProxyIf {
             
             /* REPLACE with the right output pathname. */
     	    write_csv_file(memused_list, memused_list.size(), "memused.csv");
-    	    write_csv_file(hitmiss_list, hitmiss_list.size(), "hitmiss.csv");
+    	    //write_csv_file(hitmiss_list, hitmiss_list.size(), "hitmiss.csv");
             cout<<"Total Misses= "<<misses<<endl;
             
         }
@@ -197,6 +197,7 @@ class MyProxyHandler : virtual public MyProxyIf {
             //   currsize= gtcache_memused();
             //    cout<<"Size filled: "<<currsize<<endl;
             //    printf("httpget_1\n");
+            cout << "Url: " << url << endl;
             _return = httpget_1_svc(url, NULL);
             //    std::cout<<"Size of web content: "<<_return.size()<<endl;
             //    currsize= gtcache_memused();
@@ -225,7 +226,7 @@ int main(int argc, char **argv) {
     boost::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
     boost::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
     TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
-    
+
     cout << "Cache size : " << capacity/1024 << endl;
     gtcache_init (capacity, minsize, 1);
     server.serve();

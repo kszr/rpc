@@ -112,6 +112,9 @@ int gtcache_init(size_t capacity, size_t min_entry_size, int num_levels){
 }
 
 char* gtcache_get(const string key, size_t* val_size){
+  if(cache_capacity <= 0)
+    return NULL;
+    
   cache_entry_t* e;
   char* ans;
   char *ch = (char *) key.c_str();

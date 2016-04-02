@@ -1,0 +1,8 @@
+workload: lru_good
+miss rate: 294/294
+avg. access time: 0.93000334
+
+workload: random
+miss rate: 420/420
+avg. access time: 1.1089644
+
