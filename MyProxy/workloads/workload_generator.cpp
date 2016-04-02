@@ -3,7 +3,7 @@
 #include <sstream>
 #include "workload_generator.hpp"
 
-static const int reps = 50; // No. of times a the access pattern for a caching policy should be run.
+static const int reps = 5; // No. of times a the access pattern for a caching policy should be run.
 
 /**
  * Loads a list of URLs from a file.
@@ -38,10 +38,13 @@ void Workload::initialize_chunk_store() {
 
 void Workload::generate_lru_good_workload() {
     lru_good.insert(lru_good.end(), chunk_store["A"].begin(), chunk_store["A"].end());
+    lru_good.insert(lru_good.end(), chunk_store["B"].begin(), chunk_store["B"].end());
+    lru_good.insert(lru_good.end(), chunk_store["C"].begin(), chunk_store["C"].end());
+    
     for(int i=0; i<reps; i++) {
-        for(char a = 'D'; a <= 'Z'; a++) {
-            lru_good.insert(lru_good.end(), chunk_store["B"].begin(), chunk_store["B"].end());
-            lru_good.insert(lru_good.end(), chunk_store["C"].begin(), chunk_store["C"].end());
+        for(char a = 'A'; a <= 'E'; a++) {
+            lru_good.insert(lru_good.end(), chunk_store["D"].begin(), chunk_store["D"].end());
+            lru_good.insert(lru_good.end(), chunk_store["E"].begin(), chunk_store["E"].end());
             std::stringstream ss;
             std::string s;
             ss << a;
@@ -82,7 +85,11 @@ void Workload::generate_lru_bad_workload() {
  * Repeating chunks D and E between sequences of three chunks that were randomly generated.
  */
 void Workload::generate_gds_good_workload() {
+<<<<<<< HEAD
     std::string sequence = "AFUDSERQZTXVDEZEHDEXDZTAVFBRDEOP";
+=======
+    std::string sequence = "AEDACBCDAEDCBCDEDCABBCADEDCBACBEDA";
+>>>>>>> 00f9cda24860bdea4a89a8a1225bf29c079ff569
     for(int i=0; i<reps; i++) {
         for(auto& ch : sequence) {
             std::stringstream ss;
