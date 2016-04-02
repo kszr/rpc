@@ -85,11 +85,7 @@ void Workload::generate_lru_bad_workload() {
  * Repeating chunks D and E between sequences of three chunks that were randomly generated.
  */
 void Workload::generate_gds_good_workload() {
-<<<<<<< HEAD
-    std::string sequence = "AFUDSERQZTXVDEZEHDEXDZTAVFBRDEOP";
-=======
     std::string sequence = "AEDACBCDAEDCBCDEDCABBCADEDCBACBEDA";
->>>>>>> 00f9cda24860bdea4a89a8a1225bf29c079ff569
     for(int i=0; i<reps; i++) {
         for(auto& ch : sequence) {
             std::stringstream ss;
